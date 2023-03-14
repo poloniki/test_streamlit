@@ -1,2 +1,4 @@
-opencv-python-headless
+opencv-python
 Pillow
+roboflow
+numpy
