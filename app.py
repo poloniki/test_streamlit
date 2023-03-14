@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image, ImageDraw
-import cv2
 from roboflow import Roboflow
 import io
 import time
@@ -56,7 +55,9 @@ def main():
         img_bytes = img_file_buffer.getvalue()
         # Load uploaded image
         pil_image = Image.open(io.BytesIO(img_bytes))
-        cv_image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+
+        cv_image = np.flip(pil_image, axis=-1)
+        st.write(cv_image.shape)
 
         st.image(pil_image)
         if st.button("Predict Please...."):
@@ -64,10 +65,6 @@ def main():
                 time.sleep(10)
             load_images(cv_image, confidence_threshold, overlap_threshold)
 
-        # pil_image = Image.open(io.BytesIO(r.content))
-        # cv_image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
-
-        # st.image(cv_image, caption='Image with bounding boxes')
 
 
 if __name__ == '__main__':
